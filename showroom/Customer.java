@@ -2,7 +2,7 @@ package showroom;
 
 import java.util.*;
 
-public class Customer {
+public class Customer extends Thread{
 	String customername,bankname;
 	String Mobilename;
 	boolean paid,emipaid;
@@ -13,10 +13,12 @@ public class Customer {
 	public Customer() {
 		
 		Scanner s = new Scanner(System.in);
-		System.out.println("1st enter ( serial_no ) AND enter u mobile name");
-
+		System.out.println("enter u mobile name and 2nd enter ( serial_no )");
+		
+		Mobilename = s.nextLine();
 		serial_no = s.nextInt();
-		Mobilename = s.next();
+		
+		System.out.println(serial_no + " " + Mobilename);
 		
 		
 	}
@@ -73,7 +75,7 @@ public class Customer {
 	public boolean isavailable(ArrayList<Mobile> mobiles,ArrayList<Customer> customer) {
 		int stock = 0;
 		for(Mobile m : mobiles ) {
-			if(m.getname() == Mobilename && m.serial_no == serial_no) {
+			if(Mobilename.equals(m.mobilename)  && serial_no == m.serial_no) {
 				stock = m.getstocks();
 				m.setstocks(stock--);
 			}		
@@ -85,7 +87,7 @@ public class Customer {
 				buy++;
 			}
 		} 
-			return buy<stock?false:true; 
+			return buy<stock?true:false; 
   }
 //	------------------------------------------------------------------------------------------------
 	public void customername() {
@@ -94,6 +96,12 @@ public class Customer {
 //	------------------------------------------------------------------------------------------
 	public void bill() {
 		String nl = System.lineSeparator();
+		System.out.println("Loding...........");
+		try {
+			Thread.sleep(3000);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		System.out.println("-------------------------------------------------------");
 		System.out.println("customer name :- " + customername + nl + 
 						   "mobile name :- " + Mobilename + '\n' +
